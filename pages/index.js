@@ -6,6 +6,8 @@ import Sidebar from "../components/layout/Sidebar";
 import Footer from "../components/layout/Footer";
 import PostCard from "../components/modules/PostCard";
 import Pagination from "../components/modules/Pagination";
+import CategoriesList from "../components/modules/CategoriesList";
+import TagsList from "../components/modules/TagsList";
 import axios from "../settings/api";
 import "../styles/index.scss";
 import { readPosts } from "../actions/post";
@@ -58,6 +60,7 @@ class Home extends React.Component {
     const pageInfo = this.state.posts
       ? this.state.posts.meta
       : this.props.posts.meta;
+    const { categories, tags } = this.props;
 
     let title = "Fan Yang's blog - 杨帆的博客";
     return (
@@ -73,16 +76,19 @@ class Home extends React.Component {
               <div className="col-lg-9 col-md-8">
                 <Main>
                   {this.renderPostsList(posts)}
-                  <div className="d-flex justify-content-center">
-                    <Pagination
-                      pageInfo={pageInfo}
-                      fetchPostsInPage={this.handleFetchPostsInPage}
-                    />
-                  </div>
+                  <Pagination
+                    pageInfo={pageInfo}
+                    fetchPostsInPage={this.handleFetchPostsInPage}
+                  />
                 </Main>
               </div>
               <div className="col-lg-3 col-md-4">
-                <Sidebar>Sidebar</Sidebar>
+                <Sidebar>
+                  <CategoriesList categories={categories} />
+                  <br />
+                  <br />
+                  <TagsList tags={tags} />
+                </Sidebar>
               </div>
             </div>
           </div>

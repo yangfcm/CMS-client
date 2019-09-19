@@ -30,9 +30,9 @@ const Pagination = props => {
   };
 
   return (
-    <React.Fragment>
+    <div className="d-flex justify-content-center">
       <ul className="pagination">{renderPages(totalPages, currentPage)}</ul>
-    </React.Fragment>
+    </div>
   );
 };
 
