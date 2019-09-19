@@ -3,7 +3,11 @@ const renderTagsList = tags => {
     return <div className="alert alert-warning text-center">No tags</div>;
   }
   return tags.map(tag => {
-    return <div key={tag._id}>{tag.name}</div>;
+    return (
+      <div className="badge badge-primary m-2 p-2" key={tag._id}>
+        {tag.name}
+      </div>
+    );
   });
 };
 

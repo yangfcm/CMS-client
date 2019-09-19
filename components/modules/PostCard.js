@@ -20,15 +20,19 @@ const PostCard = props => {
     <div className="container border-bottom mb-4 pb-4">
       <div className="row">
         <div className="col-lg-8 col-md-7 col-12 d-flex flex-column justify-content-around">
-          <h2>
-            {post.title}
-            <small>
-              {" "}
-              {post.isTop && (
-                <span className="badge badge-danger">TOP</span>
-              )}{" "}
-            </small>
-          </h2>
+          <Link href={`/post/?id=${post._id}`} as={`/post/${post._id}`}>
+            <a>
+              <h2>
+                {post.title}
+                <small>
+                  {" "}
+                  {post.isTop && (
+                    <span className="badge badge-danger">TOP</span>
+                  )}{" "}
+                </small>
+              </h2>
+            </a>
+          </Link>
           {/* <div className="mb-1">
             <i className="fas fa-folder-open"></i>
             &nbsp;&nbsp;
@@ -51,15 +55,19 @@ const PostCard = props => {
             <span className="text-primary font-weight-bold">
               &nbsp;&nbsp;{post.author.username}&nbsp;
             </span>
-            wrote at {moment(post.updatedAt * 1000).fromNow()}
+            wrote {moment(post.updatedAt * 1000).fromNow()}
           </div>
         </div>
-        <div className="col-lg-4 col-md-5 col-12 d-flex justify-content-center">
-          <img
-            src={post.featuredImage || placeholderImagSrc}
-            alt={post.title}
-            style={{ maxWidth: 80 + "%", height: "auto" }}
-          />
+        <div className="col-lg-4 col-md-5 col-12 d-flex justify-content-center text-center">
+          <Link href={`/post/?id=${post._id}`} as={`/post/${post._id}`}>
+            <a>
+              <img
+                src={post.featuredImage || placeholderImagSrc}
+                alt={post.title}
+                style={{ maxWidth: 80 + "%", height: "auto" }}
+              />
+            </a>
+          </Link>
         </div>
       </div>
     </div>
