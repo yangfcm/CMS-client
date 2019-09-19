@@ -2,15 +2,15 @@ import moment from "moment";
 import Link from "next/link";
 import { withRouter } from "next/router";
 
-const renderTags = tags => {
-  return tags.map(tag => {
-    return (
-      <span className="badge badge-light mr-3" key={tag.id}>
-        {tag.name}
-      </span>
-    );
-  });
-};
+// const renderTags = tags => {
+//   return tags.map(tag => {
+//     return (
+//       <span className="badge badge-danger mr-3" key={tag.id}>
+//         {tag.name}
+//       </span>
+//     );
+//   });
+// };
 
 const PostCard = props => {
   const { post } = props;
@@ -19,9 +19,17 @@ const PostCard = props => {
   return (
     <div className="container border-bottom mb-4 pb-4">
       <div className="row">
-        <div className="col-lg-8 col-md-7 col-12">
-          <h2>{post.title}</h2>
-          <div className="mb-1">
+        <div className="col-lg-8 col-md-7 col-12 d-flex flex-column justify-content-around">
+          <h2>
+            {post.title}
+            <small>
+              {" "}
+              {post.isTop && (
+                <span className="badge badge-danger">TOP</span>
+              )}{" "}
+            </small>
+          </h2>
+          {/* <div className="mb-1">
             <i className="fas fa-folder-open"></i>
             &nbsp;&nbsp;
             {post.category.name}
@@ -29,7 +37,7 @@ const PostCard = props => {
           <div className="mb-3">
             <i class="fas fa-tags"></i> &nbsp;
             {renderTags(post.tags)}
-          </div>
+          </div> */}
           <div className="pb-1">
             <img
               src={post.author.avatar || placeholderAvatarSrc}
@@ -40,7 +48,7 @@ const PostCard = props => {
                 borderRadius: 50 + "%"
               }}
             />
-            <span className="text-secondary ">
+            <span className="text-primary font-weight-bold">
               &nbsp;&nbsp;{post.author.username}&nbsp;
             </span>
             wrote at {moment(post.updatedAt * 1000).fromNow()}
@@ -50,7 +58,7 @@ const PostCard = props => {
           <img
             src={post.featuredImage || placeholderImagSrc}
             alt={post.title}
-            style={{ maxWidth: 100 + "%", height: "auto" }}
+            style={{ maxWidth: 80 + "%", height: "auto" }}
           />
         </div>
       </div>

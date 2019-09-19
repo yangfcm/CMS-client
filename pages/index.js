@@ -43,10 +43,10 @@ class Home extends React.Component {
         >
           <div className="container flex-grow-1">
             <div className="row mt-4">
-              <div className="col-md-8">
+              <div className="col-lg-9 col-md-8">
                 <Main>{this.renderPostsList(posts)}</Main>
               </div>
-              <div className="col-md-4">
+              <div className="col-lg-3 col-md-4">
                 <Sidebar>Sidebar</Sidebar>
               </div>
             </div>
