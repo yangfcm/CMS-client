@@ -54,7 +54,7 @@ const PostCard = props => {
             wrote at {moment(post.updatedAt * 1000).fromNow()}
           </div>
         </div>
-        <div className="col-lg-4 col-md-5 col-12">
+        <div className="col-lg-4 col-md-5 col-12 d-flex justify-content-center">
           <img
             src={post.featuredImage || placeholderImagSrc}
             alt={post.title}
