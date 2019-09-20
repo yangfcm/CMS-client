@@ -4,27 +4,34 @@ import TopNav from "../components/layout/TopNav";
 import Main from "../components/layout/Main";
 import Sidebar from "../components/layout/Sidebar";
 import Footer from "../components/layout/Footer";
-import PostCard from "../components/modules/PostCard";
 import Pagination from "../components/modules/Pagination";
+import PostsList from "../components/modules/PostsList";
 import CategoriesList from "../components/modules/CategoriesList";
 import TagsList from "../components/modules/TagsList";
 import axios from "../settings/api";
 import "../styles/index.scss";
 import { readPosts } from "../actions/post";
+import { webTitle, footerText } from "../settings";
 
 class Home extends React.Component {
   state = {
     posts: null
   };
   static getInitialProps = async () => {
-    const postsRes = await axios.get("/api/posts?status=1");
-    const categoriesRes = await axios.get("/api/categories");
-    const tagsRes = await axios.get("/api/tags");
-    return {
-      posts: postsRes.data,
-      categories: categoriesRes.data.data,
-      tags: tagsRes.data.data
-    };
+    try {
+      const postsRes = await axios.get("/api/posts?status=1");
+      const categoriesRes = await axios.get("/api/categories");
+      const tagsRes = await axios.get("/api/tags");
+      return {
+        posts: postsRes.data,
+        categories: categoriesRes.data.data,
+        tags: tagsRes.data.data
+      };
+    } catch (e) {
+      return {
+        error: e.response ? e.response.data.message : e.message
+      };
+    }
   };
 
   componentDidMount() {
@@ -34,17 +41,6 @@ class Home extends React.Component {
     });
   }
 
-  renderPostsList = posts => {
-    if (posts.length === 0) {
-      return (
-        <div className="alert alert-warning text-center">No posts found!</div>
-      );
-    }
-    return posts.map(post => {
-      return <PostCard key={post._id} post={post}></PostCard>;
-    });
-  };
-
   handleFetchPostsInPage = async page => {
     await this.props.readPosts(page);
     this.setState({
@@ -53,6 +49,9 @@ class Home extends React.Component {
   };
 
   render() {
+    if (this.props.error) {
+      return <Error message={this.props.error} />;
+    }
     console.log(this.state.posts);
     const posts = this.state.posts
       ? this.state.posts.data
@@ -62,11 +61,10 @@ class Home extends React.Component {
       : this.props.posts.meta;
     const { categories, tags } = this.props;
 
-    let title = "Fan Yang's blog - 杨帆的博客";
     return (
       <div>
-        <Header title={title} />
-        <TopNav title={title} />
+        <Header title={webTitle} />
+        <TopNav title={webTitle} />
         <div
           className="d-flex flex-column pt-5 mt-5"
           style={{ height: 93 + "vh" }}
@@ -75,7 +73,7 @@ class Home extends React.Component {
             <div className="row mt-4">
               <div className="col-lg-9 col-md-8">
                 <Main>
-                  {this.renderPostsList(posts)}
+                  <PostsList posts={posts} />
                   <Pagination
                     pageInfo={pageInfo}
                     fetchPostsInPage={this.handleFetchPostsInPage}
@@ -93,7 +91,7 @@ class Home extends React.Component {
             </div>
           </div>
           <Footer>
-            <p>CMS blog system developed by Fan Y.</p>
+            <p>{footerText}</p>
           </Footer>
         </div>
       </div>
