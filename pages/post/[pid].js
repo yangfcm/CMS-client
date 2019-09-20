@@ -4,15 +4,19 @@ import Header from "../../components/Header";
 import TopNav from "../../components/layout/TopNav";
 import Main from "../../components/layout/Main";
 import CommentForm from "../../components/modules/CommentForm";
+import CommentsList from "../../components/modules/CommentsList";
 import Footer from "../../components/layout/Footer";
 import Error from "../../components/modules/Error";
 import axios from "../../settings/api";
+import { readComments, createComment } from "../../actions/comment";
 import "../../styles/index.scss";
 import { webTitle, footerText } from "../../settings";
 
 class Post extends React.Component {
   state = {
-    post: null
+    post: null,
+    isLoadingComments: false,
+    comments: null
   };
 
   static getInitialProps = async ({ query }) => {
@@ -30,11 +34,43 @@ class Post extends React.Component {
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
-      post: this.props.post
+      post: this.props.post,
+      isLoadingComments: true
+    });
+    await this.props.readComments(this.props.post._id);
+    console.log(this.props.comment);
+    this.setState({
+      comments: this.props.comment.data,
+      isLoadingComments: false
     });
   }
+
+  /** Submit comment */
+  handleCreatComment = async formValues => {
+    const postId = this.props.post._id;
+    console.log(formValues);
+    console.log(postId);
+    const { comment, email, firstName, lastName } = formValues;
+    const formData = {
+      content: comment,
+      email,
+      firstName,
+      lastName,
+      postId
+    };
+    await this.props.createComment(formData);
+    if (this.props.comment.data && !this.props.comment.error) {
+      const newComment = this.props.comment.data;
+      newComment.isNew = true; // If isNew is set as true, use different styles to render it.
+      this.setState(state => {
+        return {
+          comments: [newComment, ...state.comments]
+        };
+      });
+    }
+  };
 
   render() {
     const placeholderAvatarSrc = "../../static/avatar-default.png";
@@ -42,6 +78,7 @@ class Post extends React.Component {
     if (this.props.error) {
       return <Error message={error} />;
     }
+    const { comments, isLoadingComments } = this.state;
 
     return (
       <div>
@@ -70,7 +107,9 @@ class Post extends React.Component {
                 <div className="text-primary font-weight-bold">
                   &nbsp;&nbsp;{post.author.username}&nbsp;
                 </div>
-                <div>wrote {moment(post.updatedAt * 1000).fromNow()}</div>
+                <div className="text-muted">
+                  wrote {moment(post.updatedAt * 1000).fromNow()}
+                </div>
               </div>
               <div className="text-center">
                 {post.featuredImage && (
@@ -89,7 +128,7 @@ class Post extends React.Component {
                 >
                   {/* Content */}
                 </div>
-                <div>
+                <h5 className="mb-3">
                   <i className="far fa-folder-open"></i>
                   &nbsp;&nbsp;
                   <span>Category</span>
@@ -97,10 +136,10 @@ class Post extends React.Component {
                   <span className="text-primary font-weight-bold">
                     {post.category.name}
                   </span>
-                </div>{" "}
+                </h5>{" "}
                 {/* Category */}
                 {post.tags.length > 0 && (
-                  <div>
+                  <h5>
                     <i className="fas fa-tags"></i>&nbsp;&nbsp;Tags &nbsp;&nbsp;
                     {post.tags.map(tag => {
                       return (
@@ -112,11 +151,26 @@ class Post extends React.Component {
                         </span>
                       );
                     })}
-                  </div>
+                  </h5>
                 )}
                 {/* Tags */}
                 <div className="my-4 border-top"></div>
-                <CommentForm postId={post._id} /> {/* Comment form*/}
+                <CommentsList
+                  comments={comments}
+                  isLoading={isLoadingComments}
+                />
+                <div className="my-4"></div>
+                {/* Comments list*/}
+                <CommentForm
+                  postId={post._id}
+                  formSubmit={this.handleCreatComment}
+                />{" "}
+                {this.props.comment && this.props.comment.error && (
+                  <div className="text-center text-danger mt-1">
+                    Failed to submit comment
+                  </div>
+                )}
+                {/* Comment form*/}
               </div>
             </Main>
           </div>
@@ -129,4 +183,13 @@ class Post extends React.Component {
   }
 }
 
-export default Post;
+const mapStateToProps = state => {
+  return {
+    comment: state.comment
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { createComment, readComments }
+)(Post);

@@ -1,6 +1,6 @@
 import axios from "../settings/api";
 
-import { READ_POSTS } from "./types";
+import { READ_POSTS, OPER_POST_ERR } from "./types";
 
 /** Read posts */
 export const readPosts = page => {
@@ -17,7 +17,7 @@ export const readPosts = page => {
     } catch (e) {
       dispatch({
         type: OPER_POST_ERR,
-        payload: e.response ? e.response.data : e.message
+        payload: e.response ? e.response.data.message : e.message
       });
     }
   };

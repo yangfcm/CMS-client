@@ -1,21 +1,17 @@
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, reset } from "redux-form";
 import TextField from "../form/TextField";
 import TextArea from "../form/TextArea";
 import { validateCommentForm } from "../../utils/validate";
 
 class CommentForm extends React.Component {
-  formSubmit = formValues => {
-    const { postId } = this.props;
-    console.log(formValues);
-    console.log(postId);
-  };
-
   render() {
     const { handleSubmit } = this.props;
     return (
       <React.Fragment>
-        <h4 className="mb-4">Leave your comment</h4>
-        <form onSubmit={handleSubmit(this.formSubmit)}>
+        <h4 className="mb-4">
+          <i className="far fa-edit"></i>Leave your comment
+        </h4>
+        <form onSubmit={handleSubmit(this.props.formSubmit)}>
           <div className="row">
             <div className="col-md-6">
               <Field
@@ -66,7 +62,11 @@ CommentForm = reduxForm({
   form: "commentForm",
   validate: validateCommentForm,
   touchOnBlur: false,
-  touchOnChange: false
+  touchOnChange: false,
+  onSubmitSuccess: (result, dispatch) => {
+    // Reset form after submitted successfully
+    return dispatch(reset("commentForm"));
+  }
 })(CommentForm);
 
 export default CommentForm;
