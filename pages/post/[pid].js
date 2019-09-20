@@ -1,12 +1,10 @@
-import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import moment from "moment";
 import Header from "../../components/Header";
 import TopNav from "../../components/layout/TopNav";
 import Main from "../../components/layout/Main";
+import CommentForm from "../../components/modules/CommentForm";
 import Footer from "../../components/layout/Footer";
-import CategoriesList from "../../components/modules/CategoriesList";
-import TagsList from "../../components/modules/TagsList";
 import Error from "../../components/modules/Error";
 import axios from "../../settings/api";
 import "../../styles/index.scss";
@@ -83,7 +81,7 @@ class Post extends React.Component {
                   />
                 )}
               </div>
-              <div style={{ maxWidth: 600 + "px", margin: "0 auto" }}>
+              <div style={{ maxWidth: 600 + "px", margin: "15px auto" }}>
                 <div className="border-top mt-4"></div> {/*horizontal line*/}
                 <div
                   className="p-2 pt-4"
@@ -117,6 +115,8 @@ class Post extends React.Component {
                   </div>
                 )}
                 {/* Tags */}
+                <div className="my-4 border-top"></div>
+                <CommentForm postId={post._id} /> {/* Comment form*/}
               </div>
             </Main>
           </div>
