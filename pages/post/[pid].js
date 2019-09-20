@@ -35,20 +35,27 @@ class Post extends React.Component {
   };
 
   async componentDidMount() {
+    if (!this.props.post) {
+      return;
+    }
     this.setState({
       post: this.props.post,
       isLoadingComments: true
     });
     await this.props.readComments(this.props.post._id);
-    console.log(this.props.comment);
+    // console.log(this.props.comment);
     this.setState({
       comments: this.props.comment.data,
-      isLoadingComments: false
+      isLoadingComments: false,
+      isSubmittingComment: false
     });
   }
 
   /** Submit comment */
   handleCreatComment = async formValues => {
+    this.setState({
+      isSubmittingComment: true
+    });
     const postId = this.props.post._id;
     console.log(formValues);
     console.log(postId);
@@ -66,7 +73,8 @@ class Post extends React.Component {
       newComment.isNew = true; // If isNew is set as true, use different styles to render it.
       this.setState(state => {
         return {
-          comments: [newComment, ...state.comments]
+          comments: [...state.comments, newComment],
+          isSubmittingComment: false
         };
       });
     }
@@ -78,7 +86,7 @@ class Post extends React.Component {
     if (this.props.error) {
       return <Error message={error} />;
     }
-    const { comments, isLoadingComments } = this.state;
+    const { comments, isLoadingComments, isSubmittingComment } = this.state;
 
     return (
       <div>
@@ -111,12 +119,12 @@ class Post extends React.Component {
                   wrote {moment(post.updatedAt * 1000).fromNow()}
                 </div>
               </div>
-              <div className="text-center">
+              <div className="d-flex justify-content-center row">
                 {post.featuredImage && (
                   <img
                     src={post.featuredImage}
                     alt={post.title}
-                    style={{ maxHeight: 250 + "px" }}
+                    style={{ maxWidth: "300px", maxHeight: "250px" }}
                   />
                 )}
               </div>
@@ -164,6 +172,7 @@ class Post extends React.Component {
                 <CommentForm
                   postId={post._id}
                   formSubmit={this.handleCreatComment}
+                  isSubmitting={isSubmittingComment}
                 />{" "}
                 {this.props.comment && this.props.comment.error && (
                   <div className="text-center text-danger mt-1">

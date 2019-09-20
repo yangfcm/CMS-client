@@ -5,7 +5,7 @@ import { validateCommentForm } from "../../utils/validate";
 
 class CommentForm extends React.Component {
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, isSubmitting } = this.props;
     return (
       <React.Fragment>
         <h4 className="mb-4">
@@ -50,7 +50,9 @@ class CommentForm extends React.Component {
             </div>
           </div>
           <div className="text-center">
-            <button className="btn btn-outline-primary">Submit</button>
+            <button className="btn btn-outline-primary" disabled={isSubmitting}>
+              Submit
+            </button>
           </div>
         </form>
       </React.Fragment>

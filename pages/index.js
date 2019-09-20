@@ -29,13 +29,16 @@ class Home extends React.Component {
       };
     } catch (e) {
       return {
-        error: e.response ? e.response.data.message : e.message
+        error: e.message
       };
     }
   };
 
   componentDidMount() {
     // console.log(this.props);
+    if (!this.props.posts) {
+      return;
+    }
     this.setState({
       posts: this.props.posts
     });

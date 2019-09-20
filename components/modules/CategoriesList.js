@@ -10,8 +10,12 @@ const renderCategoriesList = categories => {
         as={`/posts/category/${category._id}`}
         key={category._id}
       >
-        <a className="list-group-item list-group-item-action text-center">
-          {category.name}
+        <a>
+          <div className="card bg-light mb-2">
+            <div className="card-body">
+              <h5 className="card-title mb-0 text-center">{category.name}</h5>
+            </div>
+          </div>
         </a>
       </Link>
     );
@@ -22,8 +26,8 @@ const CategoriesList = props => {
   const { categories } = props;
   return (
     <React.Fragment>
-      <h4 className="text-center">Categories</h4>
-      <div className="list-group">{renderCategoriesList(categories)}</div>
+      <h4 className="text-center mb-3">Categories</h4>
+      <div>{renderCategoriesList(categories)}</div>
     </React.Fragment>
   );
 };

@@ -10,11 +10,7 @@ const renderTagsList = tags => {
         as={`/posts/tag/${tag._id}`}
         key={tag._id}
       >
-        <a>
-          <div className="badge badge-primary m-2 p-2" key={tag._id}>
-            {tag.name}
-          </div>
-        </a>
+        <a className="btn btn-outline-primary mx-2 my-1">{tag.name}</a>
       </Link>
     );
   });
@@ -24,7 +20,7 @@ const TagsList = props => {
   const { tags } = props;
   return (
     <React.Fragment>
-      <h4 className="text-center">Tags</h4>
+      <h4 className="text-center mb-3">Tags</h4>
       {renderTagsList(tags)}
     </React.Fragment>
   );
