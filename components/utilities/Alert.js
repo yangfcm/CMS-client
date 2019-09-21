@@ -10,7 +10,7 @@ const Alert = props => {
     <div className="alert alert-danger text-center">
       <button
         type="button"
-        class="close"
+        className="close"
         data-dismiss="alert"
         onClick={() => {
           setOpen(false);

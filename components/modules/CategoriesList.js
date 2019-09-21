@@ -12,7 +12,7 @@ const renderCategoriesList = categories => {
       >
         <a>
           <div className="card bg-light mb-2">
-            <div className="card-body">
+            <div className="card-body py-3">
               <h5 className="card-title mb-0 text-center">{category.name}</h5>
             </div>
           </div>
