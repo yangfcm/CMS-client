@@ -31,7 +31,10 @@ const CommentCard = props => {
             {moment(comment.createdAt * 1000).format("D MMM YYYY hh:mmA")}
           </div>
         </div>
-        <div className="card-body">{comment.content}</div>
+        <div className="card-body">
+          {comment.isTop && <span className="badge badge-danger">TOP</span>}
+          &nbsp;&nbsp;{comment.content}
+        </div>
       </div>
       {comment.isNew && <Alert message="Thank you for your comment" />}
     </React.Fragment>

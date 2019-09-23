@@ -15,13 +15,17 @@ const Pagination = props => {
       currentPage + pageSpan > totalPages
         ? totalPages
         : currentPage + pageSpan < availPages
-        ? availPages
+        ? availPages < totalPages
+          ? availPages
+          : totalPages
         : currentPage + pageSpan;
     const pageStart =
-      currentPage - pageSpan < 2
+      currentPage - pageSpan <= 1
         ? 1
         : totalPages - (currentPage - pageSpan) + 1 < availPages
-        ? totalPages - availPages + 1
+        ? totalPages - availPages >= 0
+          ? totalPages - availPages + 1
+          : 1
         : currentPage - pageSpan;
     for (let i = pageStart; i <= pageEnd; i++) {
       // Create a pagination array

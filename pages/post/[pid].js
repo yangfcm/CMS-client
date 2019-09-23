@@ -153,7 +153,7 @@ class Post extends React.Component {
                       return (
                         <span
                           key={tag._id}
-                          className="pl-1 pr-1 mx-1 badge badge-danger"
+                          className="pl-1 pr-1 mx-1 badge badge-primary"
                         >
                           {tag.name}
                         </span>
