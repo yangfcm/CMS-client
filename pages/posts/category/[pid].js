@@ -49,7 +49,7 @@ class Home extends React.Component {
   }
 
   handleFetchPostsInPage = async page => {
-    await this.props.readPosts(page);
+    await this.props.readPosts(page, this.props.category._id);
     this.setState({
       posts: this.props.postsInPage
     });
