@@ -55,7 +55,7 @@ class Home extends React.Component {
     if (this.props.error) {
       return <Error message={this.props.error} />;
     }
-    console.log(this.state.posts);
+    // console.log(this.state.posts);
     const posts = this.state.posts
       ? this.state.posts.data
       : this.props.posts.data;
