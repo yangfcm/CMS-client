@@ -53,7 +53,9 @@ class Home extends React.Component {
 
   render() {
     if (this.props.error) {
-      return <Error message={this.props.error} />;
+      return (
+        <div className="alert alert-danger text-center">{this.props.error}</div>
+      );
     }
     // console.log(this.state.posts);
     const posts = this.state.posts
