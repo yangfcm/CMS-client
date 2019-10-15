@@ -5,5 +5,5 @@ export default axios.create({
     process.env.NODE_ENV === "production"
       ? "https://yang-cms-api.herokuapp.com/"
       : "http://localhost:3005",
-  timeout: 5000
+  timeout: 10000
 });
