@@ -2,14 +2,16 @@ import React from "react";
 import App from "next/app";
 import { Provider } from "react-redux";
 import NProgress from "next-nprogress/component";
+import withRedux from "next-redux-wrapper";
 
-import withReduxStore from "../store/with-redux-store";
+import configStore from "../store";
+// import withReduxStore from "../store/with-redux-store";
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, reduxStore } = this.props;
+    const { Component, pageProps, store } = this.props;
     return (
-      <Provider store={reduxStore}>
+      <Provider store={store}>
         <NProgress color="#E8521C" spinner={false} />
         <Component {...pageProps} />
       </Provider>
@@ -17,4 +19,4 @@ class MyApp extends App {
   }
 }
 
-export default withReduxStore(MyApp);
+export default withRedux(configStore)(MyApp);

@@ -24,6 +24,7 @@
     "moment": "^2.24.0",
     "next": "^9.0.5",
     "next-nprogress": "1.4.0",
+    "next-redux-wrapper": "^4.0.1",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
