@@ -5,7 +5,7 @@ import { READ_COMMENTS, CREATE_COMMENT, OPER_COMMENT_ERR } from "./types";
 /** Read comments under a post */
 export const readComments = (id, page = null) => {
   const url = page
-    ? `/api/comments/post/${id}?page={page}`
+    ? `/api/comments/post/${id}?page=${page}`
     : `/api/comments/post/${id}`;
   return async dispatch => {
     try {
