@@ -22,7 +22,7 @@ class Post extends React.Component {
   static getInitialProps = async ({ query }) => {
     const postId = query.pid;
     try {
-      const postRes = await axios.get(`/api/posts/${postId}`);
+      const postRes = await axios.get(`/api/posts/${postId}?status=1`);
       // console.log(postRes.data);
       return {
         post: postRes.data.data
