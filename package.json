@@ -21,7 +21,7 @@
     "bootstrap": "^4.3.1",
     "cross-env": "^5.2.1",
     "express": "^4.17.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "next": "^9.0.5",
     "next-nprogress": "1.4.0",
     "next-redux-wrapper": "^4.0.1",
